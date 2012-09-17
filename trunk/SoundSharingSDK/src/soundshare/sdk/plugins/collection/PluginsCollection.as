@@ -62,8 +62,9 @@ package soundshare.sdk.plugins.collection
 		public function get collection():Array
 		{
 			var a:Array = new Array();
+			var len:int = plugins.length;
 			
-			for (var i:int = 0;i < plugins.length;i ++)
+			for (var i:int = 0;i < len;i ++)
 				a.push(plugins[i])
 			
 			return a;

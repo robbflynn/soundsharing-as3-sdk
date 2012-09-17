@@ -1,17 +1,20 @@
 package soundshare.sdk.managers.plugins
 {
-	import socket.message.FlashSocketMessage;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.builders.messages.plugins.PluginsManagersMessageBuilder;
 	import soundshare.sdk.managers.events.SecureClientEventDispatcher;
 	import soundshare.sdk.managers.plugins.events.PluginsManagerEvent;
+	import soundshare.sdk.plugins.manager.IPluginManager;
 	
 	public class PluginsManager extends SecureClientEventDispatcher
 	{
 		public static const LISTENER:String = "listener";
 		public static const BROADCASTER:String = "broadcaster";
+		public static const CONFIGURATION:String = "configuration";
 		
 		private var messageBuilder:PluginsManagersMessageBuilder;
+		private var activePlugins:Vector.<IPluginManager> = new Vector.<IPluginManager>();
 		
 		public function PluginsManager()
 		{
@@ -21,6 +24,7 @@ package soundshare.sdk.managers.plugins
 			
 			addAction("PLUGIN_EXIST", executeExistRequest);
 			addAction("PLUGIN_REQUEST", executePluginRequest);
+			addAction("GET_PLUGIN_ACTIVITY", executeGetPluginActivity);
 		}
 		
 		override protected function $dispatchSocketEvent(message:FlashSocketMessage):void
@@ -43,10 +47,9 @@ package soundshare.sdk.managers.plugins
 		
 		public function executeExistRequest(message:FlashSocketMessage):void
 		{
-			var header:Object = message.getJSONHeader();
-			var body:Object = message.getJSONBody();
+			var sender:Array = getMessageSender(message);
 			
-			var sender:Array = header.route.sender;
+			var body:Object = message.getJSONBody();
 			var _id:String = body._id;
 			
 			trace("-PluginsManager[executeExistRequest]-", token);
@@ -99,10 +102,9 @@ package soundshare.sdk.managers.plugins
 		{
 			trace("-PluginsManager[executePluginRequest]-");
 			
-			var header:Object = message.getJSONHeader();
-			var body:Object = message.getJSONBody();
+			var sender:Array = getMessageSender(message);
 			
-			var sender:Array = header.route.sender;
+			var body:Object = message.getJSONBody();
 			var _id:String = body._id;
 			var type:String = body.type;
 			var data:Object = body.data;
@@ -142,6 +144,70 @@ package soundshare.sdk.managers.plugins
 				},
 				receiver: receiver
 			});
+		}
+		
+		public function getPluginActivity(data:Object):void
+		{
+			trace("-PluginsManager[getPluginActivity]-");
+			
+			var message:FlashSocketMessage = messageBuilder.buildGetPluginActivityMessage(data);
+			
+			if (message)
+				send(message);
+		}
+		
+		public function executeGetPluginActivity(message:FlashSocketMessage):void
+		{
+			trace("-PluginsManager[executeGetPluginActivity]-");
+			
+			var sender:Array = getMessageSender(message);
+			var matchData:Object = message.getJSONBody();
+			var len:int = activePlugins.length;
+			
+			var data:Object;
+			
+			for (var i:int = 0;i < len;i ++)
+			{
+				data = activePlugins[i].match(matchData);
+				
+				if (data)
+					break;
+			}
+			
+			if (data)
+				dispatchSocketEvent({
+					event: {
+						type: PluginsManagerEvent.ACTIVE,
+						data: data
+					},
+					receiver: sender
+				});
+			else
+				dispatchSocketEvent({
+					event: {
+						type: PluginsManagerEvent.NOT_ACTIVE,
+						data: {
+							error: "Plugin is not active.",
+							code: 100
+						}
+					},
+					receiver: sender
+				});
+		}
+		
+		public function addActivePlugin(plugin:IPluginManager):void
+		{
+			activePlugins.push(plugin);
+			trace("-PluginsManager[addActivePlugin]-", plugin, activePlugins.length);
+		}
+		
+		public function removeActivePlugin(plugin:IPluginManager):void
+		{
+			var index:int = activePlugins.indexOf(plugin);
+			
+			trace("1.-PluginsManager[removeActivePlugin]-", plugin, index, activePlugins.length);
+			activePlugins.splice(index, 1);
+			trace("2.-PluginsManager[removeActivePlugin]-", plugin, index, activePlugins.length);
 		}
 	}
 }

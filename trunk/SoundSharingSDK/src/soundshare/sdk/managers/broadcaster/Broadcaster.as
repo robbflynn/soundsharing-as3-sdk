@@ -4,7 +4,7 @@ package soundshare.sdk.managers.broadcaster
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	
-	import socket.message.FlashSocketMessage;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.managers.events.SecureClientEventDispatcher;
 	import soundshare.sdk.sound.channels.mixer.ChannelsMixer;

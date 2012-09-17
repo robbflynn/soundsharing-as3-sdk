@@ -3,12 +3,12 @@ package soundshare.sdk.controllers.connection.client
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import socket.client.FlashSocketClient;
-	import socket.client.base.ClientSocketUnit;
-	import socket.client.events.FlashSocketClientEvent;
-	import socket.client.managers.routing.ClientRoutingManager;
-	import socket.client.managers.routing.events.ClientRoutingManagerEvent;
-	import socket.message.FlashSocketMessage;
+	import flashsocket.client.FlashSocketClient;
+	import flashsocket.client.base.ClientSocketUnit;
+	import flashsocket.client.events.FlashSocketClientEvent;
+	import flashsocket.client.managers.routing.ClientRoutingManager;
+	import flashsocket.client.managers.routing.events.ClientRoutingManagerEvent;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.controllers.connection.client.events.ClientConnectionEvent;
 	

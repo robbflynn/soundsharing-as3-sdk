@@ -9,6 +9,7 @@ package soundshare.sdk.data
 	import soundshare.sdk.builders.db.mongo.playlists.PlaylistsDataManagersBuilder;
 	import soundshare.sdk.builders.db.mongo.servers.ServersDataManagersBuilder;
 	import soundshare.sdk.builders.db.mongo.stations.StationsDataManagersBuilder;
+	import soundshare.sdk.builders.managers.channels.ChannelsManagersBuilder;
 	import soundshare.sdk.builders.managers.connections.manager.ConnectionsManagerBuilder;
 	import soundshare.sdk.builders.managers.playlists.loader.PlaylistsLoaderBuilder;
 	import soundshare.sdk.builders.managers.plugins.PluginsManagersBuilder;
@@ -46,6 +47,8 @@ package soundshare.sdk.data
 		
 		public var playlistsLoaderBuilder:PlaylistsLoaderBuilder;
 		
+		
+		public var channelsManagersBuilder:ChannelsManagersBuilder;
 		public var stationsManagersBuilder:StationsManagersBuilder;
 		public var serversManagersBuilder:ServersManagersBuilder;
 		public var connectionsManagerBuilder:ConnectionsManagerBuilder;
@@ -78,6 +81,7 @@ package soundshare.sdk.data
 			
 			playlistsLoaderBuilder = new PlaylistsLoaderBuilder(this);
 			
+			channelsManagersBuilder = new ChannelsManagersBuilder(this);
 			stationsManagersBuilder = new StationsManagersBuilder(this);
 			serversManagersBuilder = new ServersManagersBuilder(this);
 			connectionsManagerBuilder = new ConnectionsManagerBuilder(this);

@@ -1,7 +1,7 @@
 package soundshare.sdk.managers.events
 {
-	import socket.client.builders.message.events.ClientEventMessageBuilder;
-	import socket.client.managers.events.ClientEventDispatcher;
+	import flashsocket.client.builders.message.events.ClientEventMessageBuilder;
+	import flashsocket.client.managers.events.ClientEventDispatcher;
 	
 	import soundshare.sdk.builders.messages.events.SecureClientEventMessageBuilder;
 	

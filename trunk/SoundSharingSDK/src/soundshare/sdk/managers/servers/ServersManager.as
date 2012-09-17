@@ -1,6 +1,6 @@
 package soundshare.sdk.managers.servers
 {
-	import socket.message.FlashSocketMessage;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.builders.messages.servers.ServersManagerMessageBuilder;
 	import soundshare.sdk.managers.events.SecureClientEventDispatcher;
@@ -35,7 +35,7 @@ package soundshare.sdk.managers.servers
 				send(message);
 		}
 		
-		public function serverUp(serverId:String):void
+		/*public function serverUp(serverId:String):void
 		{
 			var message:FlashSocketMessage = messageBuilder.buildServerUpMessage(serverId);
 			
@@ -49,7 +49,7 @@ package soundshare.sdk.managers.servers
 			
 			if (message)
 				send(message);
-		}
+		}*/
 		
 		public function shutDownServer(serverId:String):void
 		{

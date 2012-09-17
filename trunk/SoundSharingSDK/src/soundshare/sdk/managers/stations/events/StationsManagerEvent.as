@@ -1,6 +1,8 @@
 package soundshare.sdk.managers.stations.events
 {
-	import socket.client.managers.events.events.ClientEventDispatcherEvent;
+	import flash.events.Event;
+	
+	import flashsocket.client.managers.events.events.ClientEventDispatcherEvent;
 	
 	public class StationsManagerEvent extends ClientEventDispatcherEvent
 	{
@@ -20,6 +22,11 @@ package soundshare.sdk.managers.stations.events
 		public function StationsManagerEvent(type:String, data:Object = null, body:Object=null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, data, body, bubbles, cancelable);
+		}
+		
+		override public function clone():Event
+		{
+			return new StationsManagerEvent(type, data, body, bubbles, cancelable);
 		}
 	}
 }

@@ -11,7 +11,7 @@ package soundshare.sdk.db.mongo.base
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
 	
-	import socket.json.JSONFacade;
+	import flashsocket.json.JSONFacade;
 	
 	import soundshare.sdk.db.mongo.base.events.MongoDBRestEvent;
 	
@@ -352,14 +352,16 @@ package soundshare.sdk.db.mongo.base
 		// 												GET RECORD
 		// ******************************************************************************************************
 		
-		public function getRecord(id:Object):void
+		public function getRecord(expression:Object):void
 		{
-			var urlString:String = fullUrl + "/get/" + id;
+			var urlString:String = fullUrl + "/get";
 			
 			trace("-getRecord-", urlString);
 			
 			var urlRequest:URLRequest = new URLRequest(urlString);
+			urlRequest.requestHeaders.push(new URLRequestHeader("Content-Type", "application/json"));
 			urlRequest.method = URLRequestMethod.POST;
+			urlRequest.data = JSONFacade.stringify(expression ? expression : {});
 			
 			getLoader = addListeners(
 				new URLLoader(),

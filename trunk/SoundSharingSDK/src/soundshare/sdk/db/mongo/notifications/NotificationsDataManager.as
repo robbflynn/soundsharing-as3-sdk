@@ -10,7 +10,7 @@ package soundshare.sdk.db.mongo.notifications
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	
-	import socket.json.JSONFacade;
+	import flashsocket.json.JSONFacade;
 	
 	import soundshare.sdk.db.mongo.base.events.MongoDBRestEvent;
 	

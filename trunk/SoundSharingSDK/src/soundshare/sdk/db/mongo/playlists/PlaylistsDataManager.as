@@ -14,7 +14,7 @@ package soundshare.sdk.db.mongo.playlists
 	import flash.utils.ByteArray;
 	import flash.utils.CompressionAlgorithm;
 	
-	import socket.json.JSONFacade;
+	import flashsocket.json.JSONFacade;
 	
 	import soundshare.sdk.db.mongo.base.MongoDBRest;
 	import soundshare.sdk.db.mongo.base.events.MongoDBRestEvent;

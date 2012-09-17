@@ -59,7 +59,9 @@ package soundshare.sdk.sound.channels.mixer
 		{
 			buffer.clear();
 			
-			for (var i:int = 0;i < channels.length;i ++) 
+			var len:int = channels.length;
+			
+			for (var i:int = 0;i < len;i ++) 
 				channels[i].prepare(size);
 			
 			var value:Number;
@@ -68,7 +70,7 @@ package soundshare.sdk.sound.channels.mixer
 			{
 				value = 0;
 				
-				for (var k:int = 0;k < channels.length; k++) 
+				for (var k:int = 0;k < len; k++) 
 					value += channels[k].readFloat();
 				
 				buffer.writeFloat(value * volume);

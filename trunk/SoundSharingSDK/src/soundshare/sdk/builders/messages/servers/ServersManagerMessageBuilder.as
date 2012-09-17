@@ -1,6 +1,6 @@
 package soundshare.sdk.builders.messages.servers
 {
-	import socket.message.FlashSocketMessage;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.managers.events.SecureClientEventDispatcher;
 
@@ -45,7 +45,7 @@ package soundshare.sdk.builders.messages.servers
 			return message;
 		}
 		
-		public function buildServerUpMessage(serverId:String):FlashSocketMessage
+		/*public function buildServerUpMessage(serverId:String):FlashSocketMessage
 		{
 			var message:FlashSocketMessage = build("SERVER_UP");
 			message.setJSONBody({
@@ -63,7 +63,7 @@ package soundshare.sdk.builders.messages.servers
 			});
 			
 			return message;
-		}
+		}*/
 		
 		public function buildShutDownServerMessage(serverId:String):FlashSocketMessage
 		{

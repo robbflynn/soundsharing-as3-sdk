@@ -10,6 +10,7 @@ package soundshare.sdk.builders.plugins
 	import soundshare.sdk.managers.plugins.request.events.PluginRequestEvent;
 	import soundshare.sdk.plugins.builder.result.PluginBuilderResult;
 	import soundshare.sdk.plugins.collection.PluginsCollection;
+	import soundshare.sdk.plugins.manager.IPluginManager;
 	import soundshare.sdk.plugins.manager.events.PluginManagerEvent;
 	import soundshare.sdk.plugins.view.IPluginView;
 
@@ -39,7 +40,7 @@ package soundshare.sdk.builders.plugins
 			if (pd)
 				pluginsManager.dispatchPluginExistComplete(sender);
 			else
-				pluginsManager.dispatchPluginExistError(sender, "Plugin not exist!", 0);
+				pluginsManager.dispatchPluginExistError(sender, "Plugin does not exist!", 0);
 		}
 		
 		protected function onPluginRequest(e:PluginsManagerEvent):void
@@ -64,7 +65,10 @@ package soundshare.sdk.builders.plugins
 			e.currentTarget.removeEventListener(PluginRequestEvent.COMPLETE, onProcessComplete);
 			e.currentTarget.removeEventListener(PluginRequestEvent.ERROR, onProcessError);
 			
-			pluginsManager.dispatchPluginRequestComplete((e.currentTarget as PluginRequest).sender, e.data);
+			var pr:PluginRequest = e.currentTarget as PluginRequest;
+			
+			pluginsManager.dispatchPluginRequestComplete(pr.sender, e.data);
+			pr.clear();
 		}
 		
 		protected function onProcessError(e:PluginRequestEvent):void
@@ -77,14 +81,20 @@ package soundshare.sdk.builders.plugins
 			var pr:PluginRequest = e.currentTarget as PluginRequest;
 			
 			pluginsManager.dispatchPluginRequestError(pr.sender, e.error, e.code);
+			pr.clear();
 		}
 		
 		public function buildListener(id:String, buildView:Boolean = true, data:Object = null):PluginBuilderResult
 		{
+			trace("-PluginsBuilder[buildListener]-", id);
+			
 			var pd:PluginData = pluginsCollection.getPluginById(id);
 			pd.plugin.pluginBuilder.context = context;
 			
 			var pbr:PluginBuilderResult = pd.plugin.pluginBuilder.buildListener(pd, buildView, data);
+			pbr.manager.addEventListener(PluginManagerEvent.DESTROY, onDestroy);
+			
+			pluginsManager.addActivePlugin(pbr.manager);
 			
 			if (pbr.view)
 				pbr.view.show();
@@ -94,10 +104,15 @@ package soundshare.sdk.builders.plugins
 		
 		public function buildBroadcaster(id:String, buildView:Boolean = true, data:Object = null):PluginBuilderResult
 		{
+			trace("-PluginsBuilder[buildBroadcaster]-", id);
+			
 			var pd:PluginData = pluginsCollection.getPluginById(id);
 			pd.plugin.pluginBuilder.context = context;
 			
 			var pbr:PluginBuilderResult = pd.plugin.pluginBuilder.buildBroadcaster(pd, buildView, data);
+			pbr.manager.addEventListener(PluginManagerEvent.DESTROY, onDestroy);
+			
+			pluginsManager.addActivePlugin(pbr.manager);
 			
 			if (pbr.view)
 				pbr.view.show();
@@ -107,15 +122,29 @@ package soundshare.sdk.builders.plugins
 		
 		public function buildConfiguration(id:String, buildView:Boolean = true, data:Object = null):PluginBuilderResult
 		{
+			trace("-PluginsBuilder[buildConfiguration]-", id);
+			
 			var pd:PluginData = pluginsCollection.getPluginById(id);
 			pd.plugin.pluginBuilder.context = context;
 			
 			var pbr:PluginBuilderResult = pd.plugin.pluginBuilder.buildConfiguration(pd, buildView, data);
+			pbr.manager.addEventListener(PluginManagerEvent.DESTROY, onDestroy);
+			
+			pluginsManager.addActivePlugin(pbr.manager);
 			
 			if (pbr.view)
 				pbr.view.show();
 			
 			return pbr;
+		}
+		
+		private function onDestroy(e:PluginManagerEvent):void
+		{
+			e.currentTarget.addEventListener(PluginManagerEvent.DESTROY, onDestroy);
+			
+			trace("-PluginsBuilder[onDestroy]-", e.currentTarget);
+			
+			pluginsManager.removeActivePlugin(e.currentTarget as IPluginManager);
 		}
 	}
 }

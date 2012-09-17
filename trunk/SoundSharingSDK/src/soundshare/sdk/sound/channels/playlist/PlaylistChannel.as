@@ -10,8 +10,6 @@ package soundshare.sdk.sound.channels.playlist
 	
 	public class PlaylistChannel extends SoundChannel
 	{
-		[Bindable] private var _broadcasting:Boolean = false;
-		
 		private var drainerBuilder:DrainerBuilder;
 		
 		private var _playlist:Array;
@@ -275,21 +273,6 @@ package soundshare.sdk.sound.channels.playlist
 					break;
 			}
 			
-			
-			
-			/*if (history.length > 1)
-				history.pop();
-			
-			if (history.length > 0)
-			{
-				currentSong = history[history.length - 1];
-				mediaData = playlist[currentSong];
-			}
-			else
-			{
-				
-			}*/
-			
 			trace("getPreviousSongData:", mediaData, currentSong);
 			
 			return mediaData;
@@ -381,9 +364,9 @@ package soundshare.sdk.sound.channels.playlist
 			return _playlist;
 		}
 		
-		public function get broadcasting():Boolean
+		public function get songIndex():int
 		{
-			return _broadcasting;
+			return currentSong;
 		}
 	}
 }

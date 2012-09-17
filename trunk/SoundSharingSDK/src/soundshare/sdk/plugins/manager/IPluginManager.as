@@ -8,7 +8,9 @@ package soundshare.sdk.plugins.manager
 	public interface IPluginManager extends IEventDispatcher
 	{
 		function prepare(data:Object = null):void
-		function destroy():void
+		function destroy(data:Object = null):void
+			
+		function match(data:Object):Object
 			
 		function set context(value:SoundShareContext):void
 		function get context():SoundShareContext

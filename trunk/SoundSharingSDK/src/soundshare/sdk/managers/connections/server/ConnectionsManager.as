@@ -1,6 +1,6 @@
 package soundshare.sdk.managers.connections.server
 {
-	import socket.message.FlashSocketMessage;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.builders.messages.connections.server.ConnectionsManagerMessageBuilder;
 	import soundshare.sdk.managers.connections.server.events.ConnectionsManagerEvent;

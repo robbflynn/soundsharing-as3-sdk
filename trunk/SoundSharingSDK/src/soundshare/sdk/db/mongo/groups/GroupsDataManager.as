@@ -8,7 +8,7 @@ package soundshare.sdk.db.mongo.groups
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	
-	import socket.json.JSONFacade;
+	import flashsocket.json.JSONFacade;
 	
 	import soundshare.sdk.db.mongo.base.MongoDBRest;
 	import soundshare.sdk.db.mongo.base.events.MongoDBRestEvent;

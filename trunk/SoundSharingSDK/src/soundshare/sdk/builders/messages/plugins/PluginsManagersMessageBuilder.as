@@ -1,6 +1,6 @@
 package soundshare.sdk.builders.messages.plugins
 {
-	import socket.message.FlashSocketMessage;
+	import flashsocket.message.FlashSocketMessage;
 	
 	import soundshare.sdk.managers.events.SecureClientEventDispatcher;
 
@@ -53,6 +53,14 @@ package soundshare.sdk.builders.messages.plugins
 				type: type,
 				data: data
 			});
+			
+			return message;
+		}
+		
+		public function buildGetPluginActivityMessage(data:Object):FlashSocketMessage
+		{
+			var message:FlashSocketMessage =  build("GET_PLUGIN_ACTIVITY");
+			message.setJSONBody(data);
 			
 			return message;
 		}

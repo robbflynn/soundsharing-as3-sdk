@@ -12,7 +12,7 @@ package soundshare.sdk.db.mongo.accounts
 	import flash.net.URLVariables;
 	import flash.utils.escapeMultiByte;
 	
-	import socket.json.JSONFacade;
+	import flashsocket.json.JSONFacade;
 	
 	import soundshare.sdk.db.mongo.base.MongoDBRest;
 	import soundshare.sdk.db.mongo.base.events.MongoDBRestEvent;

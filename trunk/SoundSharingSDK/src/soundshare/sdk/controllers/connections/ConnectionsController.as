@@ -2,7 +2,7 @@ package soundshare.sdk.controllers.connections
 {
 	import flash.events.EventDispatcher;
 	
-	import socket.client.events.FlashSocketClientEvent;
+	import flashsocket.client.events.FlashSocketClientEvent;
 	
 	import soundshare.sdk.controllers.connection.client.ClientConnection;
 	import soundshare.sdk.controllers.connections.events.ConnectionsControllerEvent;
@@ -70,7 +70,9 @@ package soundshare.sdk.controllers.connections
 		
 		public function closeAllConnections():void
 		{
-			for (var i:int = 0;i < connections.length;i ++)
+			var len:int = connections.length;
+			
+			for (var i:int = 0;i < len;i ++)
 				connections[i].disconnect();
 		}
 		

@@ -1,6 +1,6 @@
 package soundshare.sdk.managers.connections.server.events
 {
-	import socket.client.managers.events.events.ClientEventDispatcherEvent;
+	import flashsocket.client.managers.events.events.ClientEventDispatcherEvent;
 	
 	public class ConnectionsManagerEvent extends ClientEventDispatcherEvent
 	{

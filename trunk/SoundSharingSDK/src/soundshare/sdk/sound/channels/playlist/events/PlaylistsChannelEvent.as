@@ -24,5 +24,14 @@ package soundshare.sdk.sound.channels.playlist.events
 		{
 			super(type, bubbles, cancelable);
 		}
+		
+		override public function clone():Event
+		{
+			var e:PlaylistsChannelEvent = new PlaylistsChannelEvent(type, bubbles, cancelable);
+			e.data = data;
+			e.songIndex = songIndex;
+			
+			return e;
+		}
 	}
 }
